@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МедиаКонвертер - Быстрое преобразование файлов</title>
+    <meta name="description" content="Бесплатный онлайн конвертер медиафайлов. Конвертируйте видео в изображения, изменяйте форматы изображений без потери качества.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">🎬 МедиаКонвертер</h1>
+                <p class="subtitle">Профессиональное преобразование файлов онлайн</p>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="theme-toggle" title="Сменить тему">
+                    <span class="material-icons">dark_mode</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Статистика -->
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="totalConversions">0</span>
+                <span class="stat-label">конвертаций</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="filesProcessed">0</span>
+                <span class="stat-label">файлов обработано</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="timeSaved">0</span>
+                <span class="stat-label">минут сэкономлено</span>
+            </div>
+        </div>
+
+        <div class="upload-area" id="dropZone">
+            <input type="file" id="fileInput" accept=".webm,.mp4,.avi,.mov,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.heic,.heif" hidden multiple>
+            <div class="upload-content">
+                <div class="upload-icon">
+                    <span class="material-icons">cloud_upload</span>
+                </div>
+                <p class="upload-text">Перетащите файлы или нажмите для выбора</p>
+                <small class="upload-hint">Поддерживаемые форматы: WEBM, MP4, AVI, MOV, PNG, JPG, GIF, BMP, TIFF, HEIC</small>
+                <div class="upload-features">
+                    <span class="feature-tag">🚀 Быстро</span>
+                    <span class="feature-tag">🔒 Безопасно</span>
+                    <span class="feature-tag">💾 Не скачивается</span>
+                </div>
+            </div>
+            <div class="upload-progress" id="uploadProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="file-list" id="fileList"></div>
+        
+        <!-- Настройки -->
+        <div class="advanced-settings">
+            <div class="settings-group">
+                <label for="formatSelect">Формат назначения:</label>
+                <select id="formatSelect">
+                    <option value="jpeg">JPEG (высокое качество)</option>
+                    <option value="png">PNG (прозрачность)</option>
+                    <option value="webp">WEBP (современный)</option>
+                    <option value="bmp">BMP (без сжатия)</option>
+                </select>
+            </div>
+            
+            <div class="settings-group">
+                <label for="qualitySlider">Качество: <span id="qualityValue">90%</span></label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="90" class="quality-slider">
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="convertBtn" class="convert-btn" disabled>
+                <span class="btn-text">Начать конвертацию</span>
+                <span class="btn-loader">
+                    <div class="loader"></div>
+                </span>
+            </button>
+        </div>
+
+        <!-- Быстрые действия -->
+        <div class="quick-actions">
+            <h3>Популярные преобразования:</h3>
+            <div class="action-buttons">
+                <button class="action-btn" data-format="jpeg">
+                    <span class="material-icons">video_file</span>
+                    Видео в JPEG
+                </button>
+                <button class="action-btn" data-format="png">
+                    <span class="material-icons">image</span>
+                    PNG в JPEG
+                </button>
+                <button class="action-btn" data-format="webp">
+                    <span class="material-icons">compress</span>
+                    В WEBP
+                </button>
+            </div>
+        </div>
+
+        <div class="result" id="resultArea">
+            <div class="result-placeholder">
+                <span class="material-icons">photo_library</span>
+                <p>Здесь появятся результаты конвертации</p>
+            </div>
+        </div>
+
+        <!-- История конвертаций -->
+        <div class="history-section">
+            <div class="section-header">
+                <h3>История конвертаций</h3>
+                <button id="clearHistory" class="text-btn">Очистить историю</button>
+            </div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+
+        <!-- Советы и подсказки -->
+        <div class="tips-section">
+            <h3>💡 Советы по использованию</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="material-icons">high_quality</span>
+                    <h4>Лучшее качество</h4>
+                    <p>Используйте формат PNG для изображений с прозрачностью</p>
+                </div>
+                <div class="tip-card">
+                    <span class="material-icons">speed</span>
+                    <h4>Быстрая загрузка</h4>
+                    <p>WEBP формат уменьшает размер файла без потери качества</p>
+                </div>
+                <div class="tip-card">
+                    <span class="material-icons">batch_prediction</span>
+                    <h4>Пакетная обработка</h4>
+                    <p>Загружайте несколько файлов одновременно для экономии времени</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- Кнопка "Наверх" -->
+    <button id="scrollToTop" class="scroll-to-top">
+        <span class="material-icons">arrow_upward</span>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
